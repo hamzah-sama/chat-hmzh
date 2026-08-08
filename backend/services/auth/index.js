@@ -15,7 +15,12 @@ app.get("/", (req, res) => {
   res.json({ message: "Hello from auth" });
 });
 
-app.listen(port, () => {
-  console.log(`auth is running on ${port}`);
-  connectDb();
-});
+try {
+  await connectDb();
+
+  app.listen(port, () => {
+    console.log(`auth is running on ${port}`);
+  });
+} catch (error) {
+  process.exit(1);
+}

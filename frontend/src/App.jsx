@@ -11,7 +11,11 @@ const App = () => {
     }
   };
   const googleLogin = async () => {
-    const data = await signInWithPopup(auth, googleProvider);
+    try {
+      const data = await signInWithPopup(auth, googleProvider);
+    } catch (error) {
+      console.log(error);
+    }
     const token = await data.user.getIdToken();
     await handleLogin(token);
   };

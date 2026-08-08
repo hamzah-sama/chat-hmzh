@@ -1,4 +1,3 @@
-
 import mongoose from "mongoose";
 
 const connectDb = async () => {
@@ -7,6 +6,7 @@ const connectDb = async () => {
     console.log("Connected to database");
   } catch (error) {
     console.error(`Error connecting to database: ${error}`);
+    throw error;
   }
 };
 
