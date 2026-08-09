@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import proxy from "express-http-proxy";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import {protect} from "./middleware/auth.middleware.js";
+import {getCurrentUser} from "./controller/user.controller.js";
 
 dotenv.config();
 const app = express();
@@ -22,6 +24,8 @@ app.use("/auth", proxy(process.env.AUTH_SERVICE));
 app.get("/", (req, res) => {
   res.json({ message: "Gateaway is running" });
 });
+
+app.get("/test", protect, getCurrentUser);
 
 app.listen(port, () => {
   console.log(`Gateaway is running on ${port}`);
