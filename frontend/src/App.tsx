@@ -6,8 +6,8 @@ const App = () => {
   const handleLogin = async (token: string) => {
     try {
       await api.post("/auth/login", { token });
-    } catch (error) {
-      console.log(error);
+    } catch {
+      console.error("Handle login failed");
     }
   };
   const googleLogin = async () => {
@@ -15,8 +15,8 @@ const App = () => {
       const { user } = await signInWithPopup(auth, googleProvider);
       const token = await user.getIdToken();
       await handleLogin(token);
-    } catch (error) {
-      console.log(error);
+    } catch {
+      console.error("google login failed");
     }
   };
   return (
