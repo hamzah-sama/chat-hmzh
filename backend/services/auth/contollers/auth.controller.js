@@ -7,6 +7,7 @@ import redis from "../../../shared/redis/redis.js";
 export const login = async (req, res) => {
   try {
     const { token } = req.body;
+    if (!token) return res.status(401).json({ message: "Token is required" });
     let decoded;
 
     try {
@@ -17,16 +18,14 @@ export const login = async (req, res) => {
       });
     }
 
-    const { uid, email, name, picture } = decoded;
-
     const user = await User.findOneAndUpdate(
       { firebaseUid: decoded.uid },
       {
         $setOnInsert: {
-          firebaseUid: uid,
-          email,
-          name,
-          avatar: picture,
+          firebaseUid: decoded.uid,
+          email: decoded.email,
+          name: decoded.name,
+          avatar: decoded.picture,
         },
       },
       { upsert: true, new: true, runValidators: true },

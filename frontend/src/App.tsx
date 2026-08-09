@@ -1,33 +1,34 @@
-import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../utils/firebase";
-import api from "../utils/axios";
+import HomeLayout from "./components/home-layout";
+import { AuthCard } from "./components/auth-card";
+import { useEffect } from "react";
+import { test } from "./test";
+import { useDispatch } from "react-redux";
+import { setUserData } from "./redux/userSlice";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  const handleLogin = async (token: string) => {
-    try {
-      await api.post("/auth/login", { token });
-    } catch {
-      console.error("Handle login failed");
-    }
-  };
-  const googleLogin = async () => {
-    try {
-      const { user } = await signInWithPopup(auth, googleProvider);
-      const token = await user.getIdToken();
-      await handleLogin(token);
-    } catch {
-      console.error("google login failed");
-    }
-  };
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const getUser = async () => {
+      const data = await test();
+      dispatch(setUserData(data));
+    };
+
+    getUser();
+  }, []);
+
+  const { userData } = useSelector((state: any) => state.user);
+
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-black">
-      <button
-        className="w-50 h-24 bg-white cursor-pointer"
-        onClick={googleLogin}
-      >
-        Continue with Google
-      </button>
-    </div>
+    <HomeLayout>
+      {userData ? (
+        <div>
+          <h1>{userData.name}</h1>
+        </div>
+      ) : (
+        <AuthCard />
+      )}
+    </HomeLayout>
   );
 };
 
