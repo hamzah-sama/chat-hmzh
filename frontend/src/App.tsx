@@ -3,21 +3,21 @@ import { auth, googleProvider } from "../utils/firebase";
 import api from "../utils/axios";
 
 const App = () => {
-  const handleLogin = async (token) => {
+  const handleLogin = async (token: string) => {
     try {
-      const { data } = await api.post("/auth/login", { token });
-    } catch (error) {
-      console.log(error);
+      await api.post("/auth/login", { token });
+    } catch {
+      console.error("Handle login failed");
     }
   };
   const googleLogin = async () => {
     try {
-      const data = await signInWithPopup(auth, googleProvider);
-    } catch (error) {
-      console.log(error);
+      const { user } = await signInWithPopup(auth, googleProvider);
+      const token = await user.getIdToken();
+      await handleLogin(token);
+    } catch {
+      console.error("google login failed");
     }
-    const token = await data.user.getIdToken();
-    await handleLogin(token);
   };
   return (
     <div className="w-full h-screen flex justify-center items-center bg-black">
