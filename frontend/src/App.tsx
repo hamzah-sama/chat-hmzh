@@ -5,6 +5,7 @@ import { test } from "./test";
 import { useDispatch } from "react-redux";
 import { setUserData } from "./redux/userSlice";
 import { useSelector } from "react-redux";
+import type { RootState } from "./redux/store";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,13 +18,13 @@ const App = () => {
     getUser();
   }, []);
 
-  const { userData } = useSelector((state: any) => state.user);
+  const { userData } = useSelector((state: RootState) => state.user);
 
   return (
     <HomeLayout>
       {userData ? (
         <div>
-          <h1>{userData.name}</h1>
+          <h1>{userData.email}</h1>
         </div>
       ) : (
         <AuthCard />
