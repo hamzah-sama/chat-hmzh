@@ -1,15 +1,16 @@
 import express from "express";
-import dotenv from "dotenv";
-import connectDb from "./config/db.js";
-
-dotenv.config();
+import "dotenv/config";
+import connectDb from "./config/db.ts";
+import router from "./routes/chat.routes.ts";
+import { Request, Response } from "express";
 
 const port = process.env.PORT;
 
 const app = express();
 app.use(express.json());
+app.use("/", router);
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.json({ message: "Hello from chat" });
 });
 
