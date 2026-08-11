@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import Conversation from "../models/conversation.model.ts";
 import Message from "../models/message.model.ts";
+import mongoose from "mongoose";
 
 export const createConversation = async (req: Request, res: Response) => {
   try {
@@ -10,11 +11,12 @@ export const createConversation = async (req: Request, res: Response) => {
         message: "Invalid user ID",
       });
     }
+
     const conversation = await Conversation.create({
       userId,
     });
 
-    return res.status(200).json(conversation);
+    return res.status(201).json(conversation);
   } catch (error) {
     return res
       .status(500)
@@ -55,6 +57,33 @@ export const getConversation = async (req: Request, res: Response) => {
 export const saveMessage = async (req: Request, res: Response) => {
   try {
     const { conversationId, role, content } = req.body;
+    const userId = req.headers["x-user-id"];
+
+    if (typeof userId !== "string") {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
+
+    if (
+      typeof conversationId !== "string" ||
+      !mongoose.Types.ObjectId.isValid(conversationId)
+    ) {
+      return res.status(400).json({
+        message: "Invalid conversation ID",
+      });
+    }
+
+    const conversation = await Conversation.findOne({
+      _id: conversationId,
+      userId,
+    });
+
+    if (!conversation) {
+      return res.status(404).json({
+        message: "Conversation not found",
+      });
+    }
     const message = await Message.create({ conversationId, role, content });
 
     return res.status(200).json(message);

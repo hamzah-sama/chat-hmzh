@@ -7,7 +7,6 @@ export const agentRouter = async (state: AgentState) => {
   const prompt = agentPrompt(state);
 
   const response = await llm.invoke(prompt);
-  console.log(response);
 
   const content = response.content;
 

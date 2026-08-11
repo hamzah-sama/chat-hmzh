@@ -15,6 +15,10 @@ export const chatAgent = async (state: AgentState) => {
     },
   ]);
 
+  if (typeof response.content !== "string") {
+    throw new Error("Expected model response to be a string");
+  }
+
   return {
     ...state,
     aiResponse: response.content,

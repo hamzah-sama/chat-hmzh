@@ -24,7 +24,7 @@ const gemini = () => {
   }
   return new ChatGoogleGenerativeAI({
     model: "gemini-2.5-flash",
-    apiKey: groqApiKey,
+    apiKey: googleApikey,
   });
 };
 
