@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon --watch . --ext ts,js --exec tsx index.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,11 @@
     "express": "^5.2.1",
     "mongoose": "^9.9.1",
     "nodemon": "^3.1.14"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
   }
 }

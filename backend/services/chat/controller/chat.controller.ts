@@ -1,9 +1,15 @@
-import Conversation from "../models/conversation.model";
+import { Request, Response } from "express";
+import Conversation from "../models/conversation.model.ts";
+import Message from "../models/message.model.ts";
 
-export const createConversation = async (req, res) => {
+export const createConversation = async (req: Request, res: Response) => {
   try {
     const userId = req.headers["x-user-id"];
-    console.log("userId: ", userId);
+    if (typeof userId !== "string") {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
     const conversation = await Conversation.create({
       userId,
     });
@@ -15,7 +21,7 @@ export const createConversation = async (req, res) => {
       .json({ error: `Create conversation error: ${error}` });
   }
 };
-export const updateConversation = async (req, res) => {
+export const updateConversation = async (req: Request, res: Response) => {
   try {
     const { id, title } = req.body;
     const conversation = await Conversation.findByIdAndUpdate(id, {
@@ -30,7 +36,7 @@ export const updateConversation = async (req, res) => {
   }
 };
 
-export const getConversation = async (req, res) => {
+export const getConversation = async (req: Request, res: Response) => {
   try {
     const userId = req.headers["x-user-id"];
     console.log("userId: ", userId);
@@ -46,7 +52,7 @@ export const getConversation = async (req, res) => {
   }
 };
 
-export const saveMessage = async (req, res) => {
+export const saveMessage = async (req: Request, res: Response) => {
   try {
     const { conversationId, role, content } = req.body;
     const message = await Message.create({ conversationId, role, content });
@@ -57,7 +63,7 @@ export const saveMessage = async (req, res) => {
   }
 };
 
-export const getMessages = async (req, res) => {
+export const getMessages = async (req: Request, res: Response) => {
   try {
     const { conversationId } = req.body;
     const messages = await Message.find({ conversationId }).sort({
