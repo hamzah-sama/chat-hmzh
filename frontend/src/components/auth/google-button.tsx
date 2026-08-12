@@ -1,12 +1,16 @@
 import { FcGoogle } from "react-icons/fc";
-import api from "../../utils/axios";
+import api from "../../../utils/axios";
 import { signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from "../../utils/firebase";
+import { auth, googleProvider } from "../../../utils/firebase";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../redux/user-slice";
 
 export const GoogleButton = () => {
+  const dispatch = useDispatch();
   const handleLogin = async (token: string) => {
     try {
-      await api.post("/auth/login", { token });
+      const { data } = await api.post("/auth/login", { token });
+      dispatch(setUserData(data));
     } catch {
       console.error("Handle login failed");
     }

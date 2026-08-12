@@ -28,7 +28,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Gateaway is running" });
 });
 
-app.get("/test", protect, getCurrentUser);
+app.get("/getUserdata", protect, getCurrentUser);
 
 app.listen(port, () => {
   console.log(`Gateaway is running on ${port}`);
