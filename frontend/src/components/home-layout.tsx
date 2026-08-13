@@ -1,4 +1,3 @@
-
 interface Props {
   children: React.ReactNode;
 }
@@ -6,9 +5,7 @@ interface Props {
 const HomeLayout = ({ children }: Props) => {
   return (
     <div className="h-screen bg-[#0d0f14] text-white overflow-hidden">
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur">
-        {children}
-      </div>
+      {children}
     </div>
   );
 };

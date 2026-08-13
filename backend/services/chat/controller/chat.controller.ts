@@ -41,7 +41,6 @@ export const updateConversation = async (req: Request, res: Response) => {
 export const getConversation = async (req: Request, res: Response) => {
   try {
     const userId = req.headers["x-user-id"];
-    console.log("userId: ", userId);
     const conversation = await Conversation.find({
       userId,
     }).sort({ updatedAt: -1 });
@@ -94,7 +93,7 @@ export const saveMessage = async (req: Request, res: Response) => {
 
 export const getMessages = async (req: Request, res: Response) => {
   try {
-    const { conversationId } = req.body;
+    const { conversationId } = req.params;
     const messages = await Message.find({ conversationId }).sort({
       createdAt: 1,
     });
