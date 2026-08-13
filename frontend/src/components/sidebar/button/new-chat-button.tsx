@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
-import api from "../../../utils/axios";
+import api from "../../../../utils/axios";
 import { useDispatch } from "react-redux";
-import { addConversation } from "../../redux/conversation-slice";
+import { addConversation } from "../../../redux/conversation-slice";
 
 export const NewChatButton = () => {
   const dispatch = useDispatch();

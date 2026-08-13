@@ -9,7 +9,7 @@ export const AuthCard = () => {
             Welcome to chat-hmzh
           </h2>
           <p className="text-[13px] text-slate-500">
-            Please login to continue, ask anything then
+            Please log in to continue, ask anything then
           </p>
           <GoogleButton />
         </div>
