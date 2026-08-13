@@ -44,7 +44,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ChatApp />}>
-              <Route path=":chatId" element={<ChatById />} />
+              <Route path="/:chatId" element={<ChatById />} />
             </Route>
           </Routes>
         </BrowserRouter>
