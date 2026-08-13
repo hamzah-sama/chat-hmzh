@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../utils/axios";
 import { setConversation } from "../../redux/conversation-slice";
@@ -7,9 +7,7 @@ import { ConversationCard } from "./conversation-card";
 
 export const RecentChat = () => {
   const dispatch = useDispatch();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  const { conversationData } = useSelector(
+  const { conversations } = useSelector(
     (state: RootState) => state.conversation,
   );
 
@@ -33,12 +31,10 @@ export const RecentChat = () => {
         Recents
       </div>
       <div className="flex flex-col pt-2">
-        {conversationData.map((conversation) => (
+        {conversations.map((conversation) => (
           <ConversationCard
             title={conversation.title}
             key={conversation._id}
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
             id={conversation._id}
           />
         ))}

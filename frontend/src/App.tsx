@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import api from "../utils/axios";
 import { setUserData } from "./redux/user-slice";
 import { FaSpinner } from "react-icons/fa";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { ChatById } from "./components/chat-by-id";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -36,7 +38,21 @@ const App = () => {
     );
   }
 
-  return <HomeLayout>{userData ? <ChatApp /> : <AuthCard />}</HomeLayout>;
+  return (
+    <HomeLayout>
+      {userData ? (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<ChatApp />}>
+              <Route path=":chatId" element={<ChatById />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      ) : (
+        <AuthCard />
+      )}
+    </HomeLayout>
+  );
 };
 
 export default App;

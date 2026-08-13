@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { ConversationData, ConversationState } from "./types";
 
 const initialState: ConversationState = {
-  conversationData: [],
+  conversations: [],
 };
 
 const conversationSlice = createSlice({
@@ -10,11 +10,11 @@ const conversationSlice = createSlice({
   initialState,
   reducers: {
     setConversation: (state, action: PayloadAction<ConversationData[]>) => {
-      state.conversationData = action.payload;
+      state.conversations = action.payload;
     },
 
     addConversation: (state, action: PayloadAction<ConversationData>) => {
-      state.conversationData.unshift(action.payload);
+      state.conversations.unshift(action.payload);
     },
   },
 });

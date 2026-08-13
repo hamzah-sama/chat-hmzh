@@ -1,6 +1,5 @@
-import { ChatContainer } from "../chat-container";
-import { Artifact } from "../artifact";
 import { Sidebar } from "../sidebar";
+import { Outlet } from "react-router-dom";
 
 export const ChatApp = () => {
   return (
@@ -8,8 +7,7 @@ export const ChatApp = () => {
       <Sidebar />
 
       <main className="flex min-w-0 flex-1">
-        <ChatContainer />
-        <Artifact />
+        <Outlet />
       </main>
     </div>
   );

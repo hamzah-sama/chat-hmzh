@@ -18,5 +18,5 @@ export type ConversationData = {
 };
 
 export type ConversationState = {
-  conversationData: ConversationData[];
+  conversations: ConversationData[];
 };
