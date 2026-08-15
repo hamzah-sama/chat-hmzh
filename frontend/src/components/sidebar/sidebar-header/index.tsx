@@ -8,8 +8,8 @@ interface Props {
 
 export const SidebarHeader = ({ collapse, setCollapse }: Props) => {
   return collapse ? (
-    <HeaderCollapse setCollapse={setCollapse} />
+    <HeaderCollapse setCollapse={setCollapse} collapse={collapse} />
   ) : (
-    <HeaderExpand setCollapse={setCollapse} />
+    <HeaderExpand setCollapse={setCollapse} collapse={collapse} />
   );
 };

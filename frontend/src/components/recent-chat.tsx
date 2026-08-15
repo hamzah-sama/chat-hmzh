@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import api from "../../../utils/axios";
-import { setConversation } from "../../redux/conversation-slice";
-import type { RootState } from "../../redux/store";
-import { ConversationCard } from "./conversation-card";
+import api from "../../utils/axios";
+import { setConversation } from "../redux/conversation-slice";
+import type { RootState } from "../redux/store";
+import { ConversationCard } from "./conversation/conversation-card";
 
 export const RecentChat = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ export const RecentChat = () => {
 
   return (
     <div className="px-2 pt-4 pb-1">
-      <div className="text-[14px] font-medium text-slate-100/40 tracking-tight pl-2 ">
+      <div className="text-[14px] font-medium text-muted-foreground tracking-tight pl-2 ">
         Recents
       </div>
       <div className="flex flex-col pt-2">

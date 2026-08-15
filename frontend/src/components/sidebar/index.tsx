@@ -19,8 +19,7 @@ export const Sidebar = () => {
       className={`
         relative z-50
         h-screen shrink-0
-        border-r border-white/6
-        bg-[#0d0f14]
+        border-r
         transition-[width] duration-300 ease-in-out
         ${collapse ? "w-12" : "w-65"}
       `}

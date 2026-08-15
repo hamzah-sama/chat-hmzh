@@ -3,9 +3,10 @@ import { CollapseButton } from "../button/collapse-button";
 
 interface Props {
   setCollapse: React.Dispatch<React.SetStateAction<boolean>>;
+  collapse: boolean;
 }
 
-export const HeaderCollapse = ({ setCollapse }: Props) => {
+export const HeaderCollapse = ({ setCollapse, collapse }: Props) => {
   const isMobile = useIsMobile();
 
   return (
@@ -13,7 +14,7 @@ export const HeaderCollapse = ({ setCollapse }: Props) => {
       {isMobile ? (
         <img src="../../../public/app-logo.png"/>
       ) : (
-        <CollapseButton setCollapse={setCollapse} />
+        <CollapseButton setCollapse={setCollapse} collapse={collapse} />
       )}
 
       <div

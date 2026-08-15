@@ -3,17 +3,13 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
 } from "./ui/command";
 
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
-
-import { MessageSquareIcon } from "lucide-react";
-
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
-import { useNavigate } from "react-router-dom";
+import { ConversationList } from "./conversation/conversation-list";
 
 interface SearchModalProps {
   open: boolean;
@@ -24,7 +20,6 @@ export const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
   const { conversations } = useSelector(
     (state: RootState) => state.conversation,
   );
-  const navigate = useNavigate();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -39,26 +34,12 @@ export const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
 
             <CommandGroup heading="Conversations">
               {conversations.map((conversation) => (
-                <CommandItem
-                  key={conversation._id}
-                  value={conversation.title}
-                  onSelect={() => {
-                    navigate(`/${conversation._id}`);
-
-                    onOpenChange(false);
-                  }}
-                  className="cursor-pointer hover:bg-muted-foreground/50"
-                >
-                  <MessageSquareIcon className="mr-2 size-4 shrink-0" />
-
-                  <div className="min-w-0">
-                    <p className="truncate">{conversation.title}</p>
-
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(conversation.updatedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </CommandItem>
+                <ConversationList
+                  id={conversation._id}
+                  title={conversation.title}
+                  updatedAt={conversation.updatedAt}
+                  onOpenChange={onOpenChange}
+                />
               ))}
             </CommandGroup>
           </CommandList>

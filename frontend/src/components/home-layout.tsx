@@ -4,7 +4,7 @@ interface Props {
 
 const HomeLayout = ({ children }: Props) => {
   return (
-    <div className="h-screen bg-[#0d0f14] text-white overflow-hidden">
+    <div className="h-screen overflow-hidden">
       {children}
     </div>
   );

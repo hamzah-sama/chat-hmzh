@@ -1,18 +1,24 @@
-import { PanelLeftCloseIcon } from "lucide-react";
-import { iconStyling } from "../styling";
+import { PanelLeftCloseIcon, PanelRightCloseIcon } from "lucide-react";
+import { Hint } from "../../hint";
+import { Button } from "../../ui/button";
 
 interface Props {
   setCollapse: React.Dispatch<React.SetStateAction<boolean>>;
+  collapse: boolean;
 }
 
-export const CollapseButton = ({ setCollapse }: Props) => {
+export const CollapseButton = ({ setCollapse, collapse }: Props) => {
   return (
-    <button
-      type="button"
-      onClick={() => setCollapse((prev) => !prev)}
-      className={iconStyling}
-    >
-      <PanelLeftCloseIcon size={17} />
-    </button>
+    <>
+      <Hint label={collapse ? "Expand sidebar" : "Collapse sidebar"}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setCollapse((prev) => !prev)}
+        >
+          {collapse ? <PanelRightCloseIcon /> : <PanelLeftCloseIcon />}
+        </Button>
+      </Hint>
+    </>
   );
 };

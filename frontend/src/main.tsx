@@ -1,21 +1,25 @@
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App'
-import { store } from '../src/redux/store'
-import { Provider } from 'react-redux'
+import { createRoot } from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { store } from "../src/redux/store";
+import { Provider } from "react-redux";
+import { Theme } from "./hooks/theme";
 
-const container = document.getElementById('root')
+// document.documentElement.classList.add("dark");
+
+const container = document.getElementById("root");
 
 if (container) {
-  const root = createRoot(container)
+  const root = createRoot(container);
 
   root.render(
     <Provider store={store}>
+      <Theme />
       <App />
     </Provider>,
-  )
+  );
 } else {
   throw new Error(
     "Root element with ID 'root' was not found in the document. Ensure there is a corresponding HTML element with the ID 'root' in your HTML file.",
-  )
+  );
 }
