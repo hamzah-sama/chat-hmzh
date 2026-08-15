@@ -1,9 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { cn } from "../../lib/utils";
-import { ConversationMenu } from "../conversation-menu";
-import { InputRename } from "./input-rename";
-// import { useDispatch } from "react-redux";
+import { InputRename } from "../input-rename";
 
 interface Props {
   title: string;

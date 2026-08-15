@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import api from "../../../utils/axios";
-import { Input } from "../ui/input";
-import { updateConversation } from "../../redux/conversation-slice";
+import api from "../../utils/axios";
+import { Input } from "./ui/input";
+import { updateConversation } from "../redux/conversation-slice";
 
 interface Props {
   newTitle: string;
@@ -69,7 +69,7 @@ export const InputRename = ({
         }
       }}
       onBlur={handleRename}
-      className="min-w-0 flex-1 focus:border-blue-500 border focus:text-white"
+      className="min-w-0 flex-1 focus:border-blue-500 border"
     />
   );
 };

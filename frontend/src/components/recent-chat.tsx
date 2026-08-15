@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import api from "../../../utils/axios";
-import { setConversation } from "../../redux/conversation-slice";
-import type { RootState } from "../../redux/store";
-import { ConversationCard } from "./conversation-card";
+import api from "../../utils/axios";
+import { setConversation } from "../redux/conversation-slice";
+import type { RootState } from "../redux/store";
+import { ConversationCard } from "./conversation/conversation-card";
 
 export const RecentChat = () => {
   const dispatch = useDispatch();

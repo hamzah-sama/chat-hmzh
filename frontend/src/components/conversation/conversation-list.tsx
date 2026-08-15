@@ -1,9 +1,9 @@
 import { MessageSquareIcon } from "lucide-react";
-import { CommandItem } from "./ui/command";
+import { CommandItem } from "../ui/command";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { ConversationMenu } from "./conversation-menu";
-import { InputRename } from "./sidebar/input-rename";
+import { InputRename } from "../input-rename";
+import { ConversationMenu } from "../dropdown/conversation-menu";
 
 interface Props {
   id: string;

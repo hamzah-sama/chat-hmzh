@@ -3,19 +3,13 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
-  CommandItem,
   CommandList,
 } from "./ui/command";
 
 import { Dialog, DialogContent, DialogTitle } from "./ui/dialog";
-
-import { MessageSquareIcon } from "lucide-react";
-
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
-import { useNavigate } from "react-router-dom";
-import { ConversationMenu } from "./conversation-menu";
-import { ConversationList } from "./conversation-list";
+import { ConversationList } from "./conversation/conversation-list";
 
 interface SearchModalProps {
   open: boolean;
@@ -26,7 +20,6 @@ export const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
   const { conversations } = useSelector(
     (state: RootState) => state.conversation,
   );
-  const navigate = useNavigate();
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

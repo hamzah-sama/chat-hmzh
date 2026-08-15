@@ -3,17 +3,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import {
   EllipsisVertical,
   PenIcon,
   Trash2Icon,
 } from "lucide-react";
-import { Alert } from "./alert";
+import { Alert } from "../alert";
 import { useState, type ComponentProps } from "react";
-import api from "../../utils/axios";
+import api from "../../../utils/axios";
 import { useDispatch } from "react-redux";
-import { deleteConversation } from "../redux/conversation-slice";
+import { deleteConversation } from "../../redux/conversation-slice";
 
 const RenderElement = (props: ComponentProps<"span">) => {
   return (

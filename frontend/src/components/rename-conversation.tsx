@@ -10,11 +10,6 @@ export const ProjectName = ({ title }: Props) => {
   const [openInput, setOpenInput] = useState(false);
   const [name, setName] = useState("");
 
-  const handleOpenInput = () => {
-    setOpenInput(true);
-    setName(title ?? "");
-  };
-
   const handleSubmit = () => {
     const trimmedName = name.trim();
     if (trimmedName === "" || trimmedName === title) return;

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,9 +8,8 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
-import type { RootState } from "../redux/store";
-import { setTheme } from "../redux/theme-slice";
+} from "../../components/ui/dropdown-menu";
+import { setTheme } from "../../redux/theme-slice";
 
 interface Props {
   children: React.ReactElement;
