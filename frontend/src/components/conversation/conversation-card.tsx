@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { cn } from "../../lib/utils";
 import { InputRename } from "../input-rename";
+import { ConversationMenu } from "../dropdown/conversation-menu";
 
 interface Props {
   title: string;
