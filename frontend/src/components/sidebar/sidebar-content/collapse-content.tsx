@@ -1,7 +1,7 @@
 import { NewChatIcon } from "../button/new-chat-icon";
 import { SearchButton } from "../button/search-button";
 
-export const CollapseContent = () => {
+export const ContentCollapse = () => {
   return (
     <div
       className="h-full overflow-y-auto

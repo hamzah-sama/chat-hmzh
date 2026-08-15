@@ -14,6 +14,8 @@ import { MessageSquareIcon } from "lucide-react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
 import { useNavigate } from "react-router-dom";
+import { ConversationMenu } from "./conversation-menu";
+import { ConversationList } from "./conversation-list";
 
 interface SearchModalProps {
   open: boolean;
@@ -39,26 +41,12 @@ export const SearchModal = ({ open, onOpenChange }: SearchModalProps) => {
 
             <CommandGroup heading="Conversations">
               {conversations.map((conversation) => (
-                <CommandItem
-                  key={conversation._id}
-                  value={conversation.title}
-                  onSelect={() => {
-                    navigate(`/${conversation._id}`);
-
-                    onOpenChange(false);
-                  }}
-                  className="cursor-pointer hover:bg-muted-foreground/50"
-                >
-                  <MessageSquareIcon className="mr-2 size-4 shrink-0" />
-
-                  <div className="min-w-0">
-                    <p className="truncate">{conversation.title}</p>
-
-                    <p className="text-xs text-muted-foreground">
-                      {new Date(conversation.updatedAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </CommandItem>
+                <ConversationList
+                  id={conversation._id}
+                  title={conversation.title}
+                  updatedAt={conversation.updatedAt}
+                  onOpenChange={onOpenChange}
+                />
               ))}
             </CommandGroup>
           </CommandList>

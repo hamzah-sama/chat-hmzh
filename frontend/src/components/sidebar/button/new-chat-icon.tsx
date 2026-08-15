@@ -1,19 +1,17 @@
 import { PenBoxIcon } from "lucide-react";
-import { iconStyling } from "../styling";
 import { useNavigate } from "react-router-dom";
+import { Hint } from "../../hint";
+import { Button } from "../../ui/button";
 
 export const NewChatIcon = () => {
   const navigate = useNavigate();
   return (
-    <button
-      type="button"
-      className={`${iconStyling}
-              shrink-0
-              transition-all duration-300`}
-      aria-label="New chat"
-      onClick={() => navigate("/")}
-    >
-      <PenBoxIcon size={17} />
-    </button>
+    <>
+      <Hint label="New chat">
+        <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
+          <PenBoxIcon size={17} />
+        </Button>
+      </Hint>
+    </>
   );
 };

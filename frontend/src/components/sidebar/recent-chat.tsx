@@ -27,7 +27,7 @@ export const RecentChat = () => {
 
   return (
     <div className="px-2 pt-4 pb-1">
-      <div className="text-[14px] font-medium text-slate-100/40 tracking-tight pl-2 ">
+      <div className="text-[14px] font-medium text-muted-foreground tracking-tight pl-2 ">
         Recents
       </div>
       <div className="flex flex-col pt-2">

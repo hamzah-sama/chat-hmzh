@@ -1,4 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { cn } from "../../lib/utils";
+import { ConversationMenu } from "../conversation-menu";
+import { InputRename } from "./input-rename";
+// import { useDispatch } from "react-redux";
 
 interface Props {
   title: string;
@@ -8,16 +13,43 @@ interface Props {
 export const ConversationCard = ({ id, title }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [isRenaming, setIsRenaming] = useState(false);
+  const [newTitle, setNewTitle] = useState(title);
+
   const isSelected = location.pathname === `/${id}`;
+
   return (
     <button
       type="button"
-      className={`w-full  transition-colors duration-150 text-white border-none cursor-pointer p-2 rounded-lg text-sm font-medium ${isSelected ? "bg-amber-50/5" : "hover:bg-amber-50/5"}`}
+      className={cn(
+        "group flex w-full cursor-pointer items-center justify-start rounded-lg border-none p-2 text-sm font-medium transition-colors duration-150",
+        isSelected ? "bg-muted" : "hover:bg-muted",
+      )}
       onClick={() => {
-        navigate(`/${id}`);
+        if (!isRenaming) {
+          navigate(`/${id}`);
+        }
       }}
     >
-      <span>{title}</span>
+      {isRenaming ? (
+        <InputRename
+          newTitle={newTitle}
+          setNewTitle={setNewTitle}
+          setIsRenaming={setIsRenaming}
+          title={title}
+          id={id}
+        />
+      ) : (
+        <span className="min-w-0 flex-1 truncate text-left">{title}</span>
+      )}
+
+      <ConversationMenu
+        conversationId={id}
+        onRename={() => {
+          setNewTitle(title);
+          setIsRenaming(true);
+        }}
+      />
     </button>
   );
 };

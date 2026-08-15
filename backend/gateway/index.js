@@ -12,6 +12,7 @@ const app = express();
 
 const port = process.env.PORT;
 
+
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -19,6 +20,7 @@ app.use(
   }),
 );
 
+app.use(express.json());
 app.use(cookieParser());
 app.use("/auth", proxy(process.env.AUTH_SERVICE));
 app.use("/chat", protect, proxyWithHeader(process.env.CHAT_SERVICE));

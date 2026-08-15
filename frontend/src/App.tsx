@@ -13,44 +13,47 @@ import { ChatById } from "./components/chat-by-id";
 const App = () => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getUserData = async () => {
       try {
         const { data } = await api.get(`/getUserdata`);
         dispatch(setUserData(data));
       } catch (error) {
+        // user belum login
       } finally {
         setLoading(false);
       }
     };
 
     getUserData();
-  }, []);
-  const { userData } = useSelector((state: RootState) => state.user);
+  }, [dispatch]);
+
+  const { userData } = useSelector(
+    (state: RootState) => state.user
+  );
 
   if (loading) {
     return (
-      <HomeLayout>
-        <div className="flex justify-center items-center h-screen">
-          <FaSpinner />
-        </div>
-      </HomeLayout>
+      <div className="flex h-screen items-center justify-center">
+        <FaSpinner className="animate-spin" />
+      </div>
     );
+  }
+
+  if (!userData) {
+    return <AuthCard />;
   }
 
   return (
     <HomeLayout>
-      {userData ? (
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<ChatApp />}>
-              <Route path="/:chatId" element={<ChatById />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      ) : (
-        <AuthCard />
-      )}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ChatApp />}>
+            <Route path=":chatId" element={<ChatById />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </HomeLayout>
   );
 };

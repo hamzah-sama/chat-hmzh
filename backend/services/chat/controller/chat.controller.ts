@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Conversation from "../models/conversation.model.ts";
 import Message from "../models/message.model.ts";
 import mongoose from "mongoose";
+import { isValidConversationId, isValidUserId } from "./utils.ts";
 
 export const createConversation = async (req: Request, res: Response) => {
   try {
@@ -25,22 +26,49 @@ export const createConversation = async (req: Request, res: Response) => {
 };
 export const updateConversation = async (req: Request, res: Response) => {
   try {
+    const userId = req.headers["x-user-id"];
     const { id, title } = req.body;
-    const conversation = await Conversation.findByIdAndUpdate(id, {
-      title,
-    });
+    if (!isValidUserId(userId)) {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
 
-    return res.status(200).json(conversation);
+    if (!isValidConversationId(id)) {
+      return res.status(400).json({
+        message: "Invalid conversation ID",
+      });
+    }
+
+    const conversation = await Conversation.findOneAndUpdate(
+      { _id: id, userId },
+      { title },
+    );
+
+    if (!conversation) {
+      return res.status(404).json({
+        message: "Conversation not found",
+      });
+    }
+
+    return res.status(200).json({
+      message: "Conversation updated successfully",
+    });
   } catch (error) {
     return res
       .status(500)
-      .json({ error: `Create conversation error: ${error}` });
+      .json({ error: `Update conversation error: ${error}` });
   }
 };
 
 export const getConversation = async (req: Request, res: Response) => {
   try {
     const userId = req.headers["x-user-id"];
+    if (!isValidUserId(userId)) {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
     const conversation = await Conversation.find({
       userId,
     }).sort({ updatedAt: -1 });
@@ -53,21 +81,58 @@ export const getConversation = async (req: Request, res: Response) => {
   }
 };
 
-export const saveMessage = async (req: Request, res: Response) => {
+export const deleteConversation = async (req: Request, res: Response) => {
   try {
-    const { conversationId, role, content } = req.body;
+    const { conversationId } = req.body;
     const userId = req.headers["x-user-id"];
 
-    if (typeof userId !== "string") {
+    if (!isValidUserId(userId)) {
       return res.status(401).json({
         message: "Invalid user ID",
       });
     }
 
-    if (
-      typeof conversationId !== "string" ||
-      !mongoose.Types.ObjectId.isValid(conversationId)
-    ) {
+    if (!isValidConversationId(conversationId)) {
+      return res.status(400).json({
+        message: "Invalid conversation ID",
+      });
+    }
+
+    const conversation = await Conversation.findOne({
+      _id: conversationId,
+      userId,
+    });
+
+    if (!conversation) {
+      return res.status(404).json({
+        message: "Conversation not found",
+      });
+    }
+
+    await Message.deleteMany({ conversationId });
+
+    await conversation.deleteOne();
+
+    return res.status(200).json("Conversation deleted successfully");
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: `Delete conversation error: ${error}` });
+  }
+};
+
+export const saveMessage = async (req: Request, res: Response) => {
+  try {
+    const { conversationId, role, content } = req.body;
+    const userId = req.headers["x-user-id"];
+
+    if (!isValidUserId(userId)) {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
+
+    if (!isValidConversationId(conversationId)) {
       return res.status(400).json({
         message: "Invalid conversation ID",
       });
@@ -94,12 +159,36 @@ export const saveMessage = async (req: Request, res: Response) => {
 export const getMessages = async (req: Request, res: Response) => {
   try {
     const { conversationId } = req.params;
+    const userId = req.headers["x-user-id"];
+
+    if (!isValidUserId(userId)) {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
+
+    if (!isValidConversationId(conversationId)) {
+      return res.status(400).json({
+        message: "Invalid conversation ID",
+      });
+    }
+    const conversation = await Conversation.findOne({
+      _id: conversationId,
+      userId,
+    });
+
+    if (!conversation) {
+      return res.status(404).json({
+        message: "Conversation not found",
+      });
+    }
+
     const messages = await Message.find({ conversationId }).sort({
       createdAt: 1,
     });
 
     return res.status(200).json(messages);
   } catch (error) {
-    return res.status(500).json({ error: `Save message error: ${error}` });
+    return res.status(500).json({ error: `Get message error: ${error}` });
   }
 };

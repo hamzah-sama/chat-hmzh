@@ -4,7 +4,7 @@ interface Props {
 
 export const Artifact = ({ chatId }: Props) => {
   return (
-    <div className="hidden lg:flex flex-col overflow-hidden shrink-0 border-l border-white/6  w-50">
+    <div className="hidden lg:flex flex-col overflow-hidden shrink-0 border-l w-50">
       {chatId}
     </div>
   );
