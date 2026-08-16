@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { InferSchemaType } from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
@@ -23,5 +24,7 @@ const messageSchema = new mongoose.Schema(
 );
 
 const Message = mongoose.model("Message", messageSchema);
+
+export type MessageType = InferSchemaType<typeof messageSchema>;
 
 export default Message;

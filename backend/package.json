@@ -1,5 +1,11 @@
 {
   "name": "backend",
+  "private": true,
+  "workspaces": [
+    "services/*",
+    "gateway",
+    "shared"
+  ],
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

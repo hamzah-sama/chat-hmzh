@@ -1,4 +1,4 @@
-import redis from "../../shared/redis/redis.js";
+import { redis } from "@app/shared";
 
 export const protect = async (req, res, next) => {
   try {

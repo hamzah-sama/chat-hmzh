@@ -31,7 +31,7 @@ const gemini = () => {
 export const getModel = async (agent: ModelAgent) => {
   switch (agent) {
     case "chat":
-      return groq();
+      return gemini();
     case "search":
       return groq();
     case "coding":
