@@ -3,6 +3,7 @@ import type { ConversationData, ConversationState } from "./types";
 
 const initialState: ConversationState = {
   conversations: [],
+  selectedConversation: null,
 };
 
 const conversationSlice = createSlice({

@@ -6,12 +6,12 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "../components/ui/dropdown-menu";
+} from "../../components/ui/dropdown-menu";
 import { useDispatch } from "react-redux";
-import api from "../../utils/axios";
-import { setUserData } from "../redux/user-slice";
-import { setConversation } from "../redux/conversation-slice";
-import { Alert } from "./alert";
+import api from "../../../utils/axios";
+import { setUserData } from "../../redux/user-slice";
+import { setConversation } from "../../redux/conversation-slice";
+import { Alert } from "../alert";
 import { useState } from "react";
 
 interface Props {

@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-import Conversation from "../models/conversation.model.ts";
 
-export const isValidUserId = (id: unknown): boolean => {
+export const isValidUserId = (id: unknown): id is string => {
   return typeof id === "string";
 };
 
-export const isValidConversationId = (id: unknown): boolean => {
+export const isValidConversationId = (id: unknown): id is string => {
   return typeof id === "string" && mongoose.Types.ObjectId.isValid(id);
 };

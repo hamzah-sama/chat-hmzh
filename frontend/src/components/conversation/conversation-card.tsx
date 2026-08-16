@@ -18,12 +18,15 @@ export const ConversationCard = ({ id, title }: Props) => {
   const isSelected = location.pathname === `/${id}`;
 
   return (
+  <div
+    className={cn(
+      "group flex w-full items-center rounded-lg p-2 text-sm font-medium transition-colors duration-150",
+      isSelected ? "bg-muted" : "hover:bg-muted",
+    )}
+  >
     <button
       type="button"
-      className={cn(
-        "group flex w-full cursor-pointer items-center justify-start rounded-lg border-none p-2 text-sm font-medium transition-colors duration-150",
-        isSelected ? "bg-muted" : "hover:bg-muted",
-      )}
+      className="min-w-0 flex-1 cursor-pointer text-left"
       onClick={() => {
         if (!isRenaming) {
           navigate(`/${id}`);
@@ -39,16 +42,17 @@ export const ConversationCard = ({ id, title }: Props) => {
           id={id}
         />
       ) : (
-        <span className="min-w-0 flex-1 truncate text-left">{title}</span>
+        <span className="block truncate">{title}</span>
       )}
-
-      <ConversationMenu
-        conversationId={id}
-        onRename={() => {
-          setNewTitle(title);
-          setIsRenaming(true);
-        }}
-      />
     </button>
-  );
+
+    <ConversationMenu
+      conversationId={id}
+      onRename={() => {
+        setNewTitle(title);
+        setIsRenaming(true);
+      }}
+    />
+  </div>
+);
 };

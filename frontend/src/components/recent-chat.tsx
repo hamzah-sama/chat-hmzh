@@ -30,15 +30,21 @@ export const RecentChat = () => {
       <div className="text-[14px] font-medium text-muted-foreground tracking-tight pl-2 ">
         Recents
       </div>
-      <div className="flex flex-col pt-2">
-        {conversations.map((conversation) => (
-          <ConversationCard
-            title={conversation.title}
-            key={conversation._id}
-            id={conversation._id}
-          />
-        ))}
-      </div>
+      {conversations.length === 0 ? (
+        <div className="pt-2 text-center text-[13px] text-muted-foreground">
+          No recent chat
+        </div>
+      ) : (
+        <div className="flex flex-col pt-2">
+          {conversations.map((conversation) => (
+            <ConversationCard
+              title={conversation.title}
+              key={conversation._id}
+              id={conversation._id}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

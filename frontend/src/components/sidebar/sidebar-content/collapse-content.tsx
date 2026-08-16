@@ -1,5 +1,6 @@
 import { NewChatIcon } from "../button/new-chat-icon";
 import { SearchButton } from "../button/search-button";
+import { SettingButton } from "../button/settings-button";
 
 export const ContentCollapse = () => {
   return (
@@ -13,6 +14,7 @@ export const ContentCollapse = () => {
       <div className="px-2 pt-4 flex flex-col gap-2">
         <NewChatIcon />
         <SearchButton />
+        <SettingButton />
       </div>
     </div>
   );

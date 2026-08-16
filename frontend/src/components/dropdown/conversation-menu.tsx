@@ -4,16 +4,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
-import {
-  EllipsisVertical,
-  PenIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { EllipsisVertical, PenIcon, Trash2Icon } from "lucide-react";
 import { Alert } from "../alert";
 import { useState, type ComponentProps } from "react";
 import api from "../../../utils/axios";
 import { useDispatch } from "react-redux";
 import { deleteConversation } from "../../redux/conversation-slice";
+import { useNavigate, useParams } from "react-router-dom";
 
 const RenderElement = (props: ComponentProps<"span">) => {
   return (
@@ -34,13 +31,12 @@ interface Props {
   onRename: () => void;
 }
 
-export const ConversationMenu = ({
-  conversationId,
-  onRename,
-}: Props) => {
+export const ConversationMenu = ({ conversationId, onRename }: Props) => {
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { chatId } = useParams();
 
   const handleDelete = async () => {
     try {
@@ -53,6 +49,10 @@ export const ConversationMenu = ({
       dispatch(deleteConversation(conversationId));
     } catch (error) {
       console.error("Delete conversation failed:", error);
+    } finally {
+      if (chatId === conversationId) {
+        navigate("/");
+      }
     }
   };
 
@@ -61,10 +61,7 @@ export const ConversationMenu = ({
       <DropdownMenu>
         <DropdownMenuTrigger render={<RenderElement />} />
 
-        <DropdownMenuContent
-          className="w-40"
-          align="start"
-        >
+        <DropdownMenuContent className="w-40" align="start">
           <DropdownMenuItem
             className="flex justify-between"
             onClick={(e) => {
@@ -73,10 +70,7 @@ export const ConversationMenu = ({
             }}
           >
             Delete
-            <Trash2Icon
-              size={14}
-              className="text-destructive"
-            />
+            <Trash2Icon size={14} className="text-destructive" />
           </DropdownMenuItem>
 
           <DropdownMenuItem
