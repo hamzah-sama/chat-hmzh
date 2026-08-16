@@ -1,8 +1,16 @@
 import { getModel } from "../config/llm-models.ts";
-import { AgentState } from "../types.ts";
+import { getMemory } from "../config/memory.ts";
+import { AgentState, HistoryMessages } from "../types.ts";
+import {
+  SystemMessage,
+  HumanMessage,
+  AIMessage,
+} from "@langchain/core/messages";
 
 export const chatAgent = async (state: AgentState) => {
   const llm = await getModel("chat");
+
+  const history: HistoryMessages = await getMemory(state.conversationId);
 
   const systemPrompt = `
 You are Chat Hamzah, an intelligent, helpful, and precise AI assistant.
@@ -104,17 +112,24 @@ Do not output HTML.
 Do not escape Markdown syntax unnecessarily.
 Preserve newlines and formatting.
 `;
- 
-  const response = await llm.invoke([
-    {
-      role: "system",
-      content: systemPrompt,
-    },
-    {
-      role: "user",
-      content: state.prompt,
-    },
-  ]);
+
+  const messages: (SystemMessage | HumanMessage | AIMessage)[] = [
+    new SystemMessage(systemPrompt),
+  ];
+
+  history.forEach((message) => {
+    if (message.role === "user") {
+      messages.push(new HumanMessage(message.content));
+    }
+
+    if (message.role === "assistant") {
+      messages.push(new AIMessage(message.content));
+    }
+  });
+
+  messages.push(new HumanMessage(state.prompt));
+
+  const response = await llm.invoke(messages);
 
   if (typeof response.content !== "string") {
     throw new Error("Expected model response to be a string");

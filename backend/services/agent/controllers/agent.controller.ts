@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import axios from "axios";
 import { graph } from "../graph/index.ts";
 import mongoose from "mongoose";
+import { addMessages } from "../config/memory.ts";
 
 export const agent = async (req: Request, res: Response) => {
   try {
@@ -27,6 +28,8 @@ export const agent = async (req: Request, res: Response) => {
       });
     }
 
+    await addMessages(conversationId, prompt, "user");
+
     const { data: userMessage } = await axios.post(
       `${process.env.CHAT_SERVICE}/create-message`,
       {
@@ -43,6 +46,8 @@ export const agent = async (req: Request, res: Response) => {
     );
 
     const result = await graph.invoke({ prompt, conversationId });
+
+    await addMessages(conversationId, result.aiResponse, "assistant");
 
     const { data: assistantMessage } = await axios.post(
       `${process.env.CHAT_SERVICE}/create-message`,
