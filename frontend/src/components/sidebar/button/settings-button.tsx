@@ -1,7 +1,7 @@
 import { SettingsIcon } from "lucide-react";
 import { Hint } from "../../hint";
 import { Button } from "../../ui/button";
-import { SettingMenu } from "../../setting-menu";
+import { SettingMenu } from "../../dropdown/setting-menu";
 
 export const SettingButton = () => {
   return (

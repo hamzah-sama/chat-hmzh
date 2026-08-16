@@ -1,20 +1,30 @@
 import { Request, Response } from "express";
 import Conversation from "../models/conversation.model.ts";
 import Message from "../models/message.model.ts";
-import mongoose from "mongoose";
 import { isValidConversationId, isValidUserId } from "./utils.ts";
 
 export const createConversation = async (req: Request, res: Response) => {
   try {
     const userId = req.headers["x-user-id"];
-    if (typeof userId !== "string") {
+    const { message } = req.body;
+    if (!isValidUserId(userId)) {
       return res.status(401).json({
         message: "Invalid user ID",
       });
     }
 
+    if (typeof message !== "string" || !message.trim()) {
+      return res.status(400).json({
+        message: "Invalid message",
+      });
+    }
+
+    const title =
+      message.length > 20 ? message.slice(0, 20).concat("...") : message;
+
     const conversation = await Conversation.create({
       userId,
+      title,
     });
 
     return res.status(201).json(conversation);
@@ -121,7 +131,7 @@ export const deleteConversation = async (req: Request, res: Response) => {
   }
 };
 
-export const saveMessage = async (req: Request, res: Response) => {
+export const createMessage = async (req: Request, res: Response) => {
   try {
     const { conversationId, role, content } = req.body;
     const userId = req.headers["x-user-id"];
@@ -191,4 +201,14 @@ export const getMessages = async (req: Request, res: Response) => {
   } catch (error) {
     return res.status(500).json({ error: `Get message error: ${error}` });
   }
+};
+
+export const test = async (req: Request, res: Response) => {
+  const userId = req.headers["x-user-id"];
+  const { content } = req.body;
+  console.log({ userId, content });
+
+  res.status(200).json({
+    message: "Test chat route is working",
+  });
 };

@@ -6,6 +6,16 @@ import mongoose from "mongoose";
 export const agent = async (req: Request, res: Response) => {
   try {
     const { prompt, conversationId } = req.body;
+    const userId = req.headers["x-user-id"];
+
+    if (
+      typeof userId !== "string" ||
+      !mongoose.Types.ObjectId.isValid(userId)
+    ) {
+      return res.status(401).json({
+        message: "Invalid user ID",
+      });
+    }
     if (
       typeof prompt !== "string" ||
       !prompt.trim() ||
@@ -16,8 +26,9 @@ export const agent = async (req: Request, res: Response) => {
         error: "Invalid prompt or conversationId",
       });
     }
-    await axios.post(
-      `${process.env.CHAT_SERVICE}/save-message`,
+
+    const { data: userMessage } = await axios.post(
+      `${process.env.CHAT_SERVICE}/create-message`,
       {
         conversationId,
         role: "user",
@@ -25,12 +36,33 @@ export const agent = async (req: Request, res: Response) => {
       },
       {
         timeout: 10000,
+        headers: {
+          "x-user-id": userId,
+        },
       },
     );
 
     const result = await graph.invoke({ prompt, conversationId });
 
-    res.status(200).json(result.aiResponse);
+    const { data: assistantMessage } = await axios.post(
+      `${process.env.CHAT_SERVICE}/create-message`,
+      {
+        conversationId,
+        role: "assistant",
+        content: result.aiResponse,
+      },
+      {
+        timeout: 10000,
+        headers: {
+          "x-user-id": userId,
+        },
+      },
+    );
+
+    res.status(200).json({
+      userMessage,
+      assistantMessage,
+    });
   } catch (error) {
     if (axios.isAxiosError(error) && error.code === "ECONNABORTED") {
       return res.status(504).json({

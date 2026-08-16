@@ -9,6 +9,7 @@ import { setUserData } from "./redux/user-slice";
 import { FaSpinner } from "react-icons/fa";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ChatById } from "./components/chat-by-id";
+import { Home } from "./components/home";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -29,9 +30,7 @@ const App = () => {
     getUserData();
   }, [dispatch]);
 
-  const { userData } = useSelector(
-    (state: RootState) => state.user
-  );
+  const { userData } = useSelector((state: RootState) => state.user);
 
   if (loading) {
     return (
@@ -50,6 +49,7 @@ const App = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ChatApp />}>
+            <Route index element={<Home />} />
             <Route path=":chatId" element={<ChatById />} />
           </Route>
         </Routes>

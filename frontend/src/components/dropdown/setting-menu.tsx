@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,6 +10,8 @@ import {
   DropdownMenuTrigger,
 } from "../../components/ui/dropdown-menu";
 import { setTheme } from "../../redux/theme-slice";
+import type { RootState } from "../../redux/store";
+import { Check } from "lucide-react";
 
 interface Props {
   children: React.ReactElement;
@@ -18,6 +20,7 @@ interface Props {
 export const SettingMenu = ({ children }: Props) => {
   const dispatch = useDispatch();
 
+  const { theme } = useSelector((state: RootState) => state.theme);
   return (
     <>
       <DropdownMenu>
@@ -27,14 +30,28 @@ export const SettingMenu = ({ children }: Props) => {
             <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
-                <DropdownMenuItem onClick={() => dispatch(setTheme("system"))}>
+                <DropdownMenuItem
+                  closeOnClick={false}
+                  onClick={() => dispatch(setTheme("system"))}
+                >
                   System
+                  {theme === "system" && <Check className="ml-auto size-4" />}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => dispatch(setTheme("dark"))}>
+
+                <DropdownMenuItem
+                  closeOnClick={false}
+                  onClick={() => dispatch(setTheme("dark"))}
+                >
                   Dark
+                  {theme === "dark" && <Check className="ml-auto size-4" />}
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => dispatch(setTheme("light"))}>
+
+                <DropdownMenuItem
+                  closeOnClick={false}
+                  onClick={() => dispatch(setTheme("light"))}
+                >
                   Light
+                  {theme === "light" && <Check className="ml-auto size-4" />}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>

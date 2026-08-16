@@ -1,5 +1,5 @@
 import { NewChatButton } from "../button/new-chat-button";
-import { RecentChat } from "../recent-chat";
+import { RecentChat } from "../../recent-chat";
 
 export const Contentexpand = () => {
   return (

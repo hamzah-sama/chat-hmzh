@@ -1,4 +1,4 @@
-import { AccountMenu } from "../../account-menu";
+import { AccountMenu } from "../../dropdown/account-menu";
 import { Hint } from "../../hint";
 
 interface Props {

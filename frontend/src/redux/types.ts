@@ -19,4 +19,18 @@ export type ConversationData = {
 
 export type ConversationState = {
   conversations: ConversationData[];
+  selectedConversation: ConversationData | null;
+};
+
+export type MessageData = {
+  createdAt: string;
+  updatedAt: string;
+  conversationId: string;
+  role: string;
+  content: string;
+  _id: string;
+};
+
+export type MessageState = {
+  messages: MessageData[];
 };

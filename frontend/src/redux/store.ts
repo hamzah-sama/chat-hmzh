@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./user-slice";
 import conversationReducer from "./conversation-slice";
 import themeReducer from "./theme-slice";
+import messagesSlice from "./messages-slice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     conversation: conversationReducer,
     theme: themeReducer,
+    messages: messagesSlice,
   },
 });
 
