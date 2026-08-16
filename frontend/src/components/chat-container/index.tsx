@@ -5,11 +5,12 @@ import type { RootState } from "../../redux/store";
 import { setMessages } from "../../redux/messages-slice";
 import { InputBar } from "./input-bar";
 import { MessageRenderer } from "./message-renderer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const ChatContainer = () => {
   const dispatch = useDispatch();
-  const {chatId} = useParams();
+  const { chatId } = useParams();
+  const navigate = useNavigate();
   const { messages } = useSelector((state: RootState) => state.messages);
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -18,9 +19,13 @@ export const ChatContainer = () => {
 
   const [loading, setLoading] = useState(true);
 
-  // Fetch messages when selected conversation changes
+  // Fetch messages when chatId changes or initial mounts
   useEffect(() => {
     const getMessages = async () => {
+      if (!chatId) {
+        navigate("/", { replace: true });
+        return;
+      }
       try {
         setLoading(true);
 
@@ -31,15 +36,22 @@ export const ChatContainer = () => {
         const { data } = await api.get(`/chat/get-messages/${chatId}`);
 
         dispatch(setMessages(data));
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed get messages:", error);
+
+        const { status } = error.response;
+
+        if (status === 404 || status === 400) {
+          dispatch(setMessages([]));
+          navigate("/", { replace: true });
+        }
       } finally {
         setLoading(false);
       }
     };
 
     getMessages();
-  }, [chatId, dispatch]);
+  }, [chatId, dispatch, navigate]);
 
   // Handle scrolling
   useEffect(() => {

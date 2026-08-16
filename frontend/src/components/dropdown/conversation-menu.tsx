@@ -47,12 +47,11 @@ export const ConversationMenu = ({ conversationId, onRename }: Props) => {
       });
 
       dispatch(deleteConversation(conversationId));
-    } catch (error) {
-      console.error("Delete conversation failed:", error);
-    } finally {
       if (chatId === conversationId) {
         navigate("/");
       }
+    } catch (error) {
+      console.error("Delete conversation failed:", error);
     }
   };
 

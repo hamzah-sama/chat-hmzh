@@ -13,8 +13,15 @@ export const createConversation = async (req: Request, res: Response) => {
       });
     }
 
+    if (typeof message !== "string" || !message.trim()) {
+      return res.status(400).json({
+        message: "Invalid message",
+      });
+    }
+
     const title =
       message.length > 20 ? message.slice(0, 20).concat("...") : message;
+
     const conversation = await Conversation.create({
       userId,
       title,

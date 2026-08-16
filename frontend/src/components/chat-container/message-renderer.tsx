@@ -9,20 +9,22 @@ import { Markdown } from "./markdown-format";
 
 export const MessageRenderer = () => {
   const { messages } = useSelector((state: RootState) => state.messages);
-  const [copied, setCopied] = useState(false);
-  const handleCopy = async (content: string) => {
+
+  const [copiedMessageId, setCopiedMessageId] = useState<string | null>(null);
+
+  const handleCopy = async (messageId: string, content: string) => {
     await navigator.clipboard.writeText(content);
-
-    setCopied(true);
-
+    setCopiedMessageId(messageId);
     setTimeout(() => {
-      setCopied(false);
+      setCopiedMessageId(null);
     }, 1500);
   };
+
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-6">
       {messages.map((message) => {
         const isUser = message.role === "user";
+        const copied = copiedMessageId === message._id;
 
         return (
           <div
@@ -64,7 +66,7 @@ export const MessageRenderer = () => {
                       variant="ghost"
                       size="icon"
                       className="size-7"
-                      onClick={() => handleCopy(message.content)}
+                      onClick={() => handleCopy(message._id, message.content)}
                     >
                       {copied ? (
                         <Check className="size-3.5 text-green-500" />

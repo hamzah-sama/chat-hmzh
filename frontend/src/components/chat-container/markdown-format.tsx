@@ -47,24 +47,19 @@ export const Markdown = ({ content }: Props) => {
           </blockquote>
         ),
 
-        code({ children, className, ...props }) {
-          const match = /language-(\w+)/.exec(className || "");
+        pre: ({ children }) => (
+          <pre className="my-4 overflow-x-auto rounded-xl bg-zinc-950 p-4">
+            {children}
+          </pre>
+        ),
 
-          if (match) {
-            return (
-              <pre className="my-4 overflow-x-auto rounded-xl bg-zinc-950 p-4">
-                <code className={className} {...props}>
-                  {children}
-                </code>
-              </pre>
-            );
+        code({ children, className }) {
+          if (className) {
+            return <code className={className}>{children}</code>;
           }
 
           return (
-            <code
-              className="rounded bg-muted px-1.5 py-0.5 text-[13px]"
-              {...props}
-            >
+            <code className="rounded bg-muted px-1.5 py-0.5 text-[13px]">
               {children}
             </code>
           );

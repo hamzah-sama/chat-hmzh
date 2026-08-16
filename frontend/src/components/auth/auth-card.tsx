@@ -18,7 +18,7 @@ export const AuthCard = () => {
             <CardTitle className="text-xl tracking-tight">
               <div className="flex items-center justify-center gap-4 ">
                 Welcome to chat-hmzh
-                <img src="../../../public/app-logo.png" className="size-10" />
+                <img src="/app-logo.png" className="size-10" />
               </div>
             </CardTitle>
 

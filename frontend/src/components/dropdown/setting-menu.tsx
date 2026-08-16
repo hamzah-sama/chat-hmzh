@@ -31,7 +31,7 @@ export const SettingMenu = ({ children }: Props) => {
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
+                  closeOnClick={false}
                   onClick={() => dispatch(setTheme("system"))}
                 >
                   System
@@ -39,7 +39,7 @@ export const SettingMenu = ({ children }: Props) => {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
+                  closeOnClick={false}
                   onClick={() => dispatch(setTheme("dark"))}
                 >
                   Dark
@@ -47,7 +47,7 @@ export const SettingMenu = ({ children }: Props) => {
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
+                  closeOnClick={false}
                   onClick={() => dispatch(setTheme("light"))}
                 >
                   Light
